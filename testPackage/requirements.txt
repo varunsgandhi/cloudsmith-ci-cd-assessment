@@ -1,0 +1,5 @@
+# Basic requirements for a minimal Python project
+
+# Include these for testing and code quality checks
+pytest
+flake8
