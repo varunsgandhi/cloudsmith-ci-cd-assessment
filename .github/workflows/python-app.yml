@@ -13,7 +13,7 @@ jobs:
           api-key: ${{ secrets.CLOUDSMITH_API_KEY }}
           command: "push"
           format: "python"
-          owner: "interview-varun-gandhi"
+          owner: "interview-Varun- Gandhi"
           repo: "cloudsmith-ci-cd-assessment"
           republish: "true" # needed ONLY if version is not changing
           file: "testPackage/greet.py"
