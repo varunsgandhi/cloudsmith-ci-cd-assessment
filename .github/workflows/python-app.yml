@@ -1,9 +1,9 @@
-name: Push Raw
+name: Push Python
 on: push
 jobs:
   push:
     runs-on: ubuntu-latest
-    name: Raw File Push Demo
+    name: Python Push Demo
     steps:
       - uses: actions/checkout@v4
       - name: Push
@@ -12,11 +12,8 @@ jobs:
         with:
           api-key: ${{ secrets.CLOUDSMITH_API_KEY }}
           command: "push"
-          format: "raw"
+          format: "python"
           owner: "interview-varun-gandhi"
           repo: "cloudsmith-ci-cd-assessment"
+          republish: "true" # needed ONLY if version is not changing
           file: "testPackage/greet.py"
-          name: "Raw Test"
-          summary: "Github Action test of raw pushes"
-          description: "test description"
-          version: ${{ github.sha}}
