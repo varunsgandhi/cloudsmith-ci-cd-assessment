@@ -3,5 +3,5 @@ def greet(name):
   print(f"Hello, {name}!")
 
 if __name__ == "__main__":
-  name = input("Enter your name: ")
+  name = "Hello"
   greet(name)
