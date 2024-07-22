@@ -1,1 +1,39 @@
-Hello
+name: CI/CD to Cloudsmith
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: pip install setuptools wheel
+
+    - name: Build package
+      run: python setup.py sdist bdist_wheel
+
+    - name: Authenticate with Cloudsmith
+      env:
+        CLOUDSMITH_API_KEY: ${{ secrets.CLOUDSMITH_API_KEY }}
+      run: |
+        echo "cloudsmith api-key $CLOUDSMITH_API_KEY" > ~/.cloudsmith.yaml
+
+    - name: Upload package to Cloudsmith
+      uses: cloudsmith-io/cloudsmith-github-action@v1
+      with:
+        api-key: ${{ secrets.CLOUDSMITH_API_KEY }}
+        owner: 'interview-<first-name>-<last-name>'
+        repo: 'mypackage'
+        files: 'dist/*'
