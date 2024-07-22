@@ -49,4 +49,4 @@ jobs:
         format: "pypi"  # Specify the format of your package
         owner: "interview-Varun-Gandhi"
         repo: "cloudsmith-ci-cd-assessment"
-        file: "dist/*"    
+        file: "test_results/*"    
