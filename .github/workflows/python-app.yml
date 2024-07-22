@@ -23,7 +23,7 @@ jobs:
       run: pip install -r requirements.txt  # Replace with your dependencies
 
     - name: Run tests
-      run: python greet.py  # Run your tests or linters here
+      run: python testPackage/greet.py  # Run your tests or linters here
 
     - name: Upload test artifacts (optional)
       uses: actions/upload-artifact@v3
