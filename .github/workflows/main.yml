@@ -1,0 +1,43 @@
+name: CI/CD to Cloudsmith
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: pip install setuptools wheel
+
+    - name: Build package
+      run: python setup.py sdist bdist_wheel
+...
+      - name: Push
+        id: push
+        uses: cloudsmith-io/action@master
+        with:
+          api-key: ${{ secrets.CLOUDSMITH_API_KEY }}
+          command: "push"
+          format: "maven"
+          owner: "cloudsmith"
+          repo: "actions"
+          republish: "true"
+          file: "test/fixture/cloudsmith-maven-example-1.0.0.jar"
+          executable: "false" # Add this to use pip instead   
+    
