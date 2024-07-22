@@ -1,52 +1,22 @@
-# This workflow will install Python dependencies, run tests and lint with a single version of Python
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
-
-name: CI Pipeline
-
-on:
-  push:
-    branches: [ main ]  # Run on pushes to the main branch
-
+name: Push Raw
+on: push
 jobs:
-  build-and-test:
-    runs-on: ubuntu-latest  # Run on Ubuntu virtual machines
-
+  push:
+    runs-on: ubuntu-latest
+    name: Raw File Push Demo
     steps:
-    - uses: actions/checkout@v3  # Checkout the repository code
-
-    - name: Set up Python environment
-      uses: actions/setup-python@v3
-      with:
-        python-version: '3.9'  # Specify your desired Python version
-
-    - name: Install dependencies
-      run: pip install -r requirements.txt  # Replace with your dependencies
-
-    - name: Run tests
-      run: python testPackage/greet.py  # Run your tests or linters here
-
-    - name: Upload greet.py script (optional)
-      uses: actions/upload-artifact@v3
-      if: always()  # Upload artifact on all job completions
-      with:
-        name: greet-script
-        path: testPackage/greet.py  # Adjust path if needed
-    
-
-    - name: Upload test artifacts (optional)
-      uses: actions/upload-artifact@v3
-      if: always()  # Upload artifacts on all job completions
-      with:
-        name: test-results  # Artifact name
-        path: test_results  # Path to your test results directory (optional)
-
-    - name: Push to Cloudsmith
-      id: push
-      uses: cloudsmith-io/action@master
-      with:
-        api-key: ${{ secrets.CLOUDSMITH_API_KEY }}
-        command: "push"
-        format: "pypi"  # Specify the format of your package
-        owner: "interview-Varun-Gandhi"
-        repo: "cloudsmith-ci-cd-assessment"
-        file: "test_results/*"    
+      - uses: actions/checkout@v4
+      - name: Push
+        id: push
+        uses: cloudsmith-io/action@master
+        with:
+          api-key: ${{ secrets.CLOUDSMITH_API_KEY }}
+          command: "push"
+          format: "raw"
+          owner: "cloudsmith"
+          repo: "actions"
+          file: "testPackage/greet.py"
+          name: "Raw Test"
+          summary: "Github Action test of raw pushes"
+          description: "See https://github.com/cloudsmith-io/action"
+          version: ${{ github.sha}}
