@@ -25,6 +25,14 @@ jobs:
     - name: Run tests
       run: python testPackage/greet.py  # Run your tests or linters here
 
+    - name: Upload greet.py script (optional)
+      uses: actions/upload-artifact@v3
+      if: always()  # Upload artifact on all job completions
+      with:
+        name: greet-script
+        path: testPackage/greet.py  # Adjust path if needed
+    
+
     - name: Upload test artifacts (optional)
       uses: actions/upload-artifact@v3
       if: always()  # Upload artifacts on all job completions
